@@ -11,7 +11,8 @@
       "run_at": "document_end",
       "js": [
         "src/scripts/classifier.js",
-        "src/scripts/detect.js"
+        "src/scripts/detect.js",
+        "src/words/stop.js"
       ],
       "css": [
         "src/styles/style.css"

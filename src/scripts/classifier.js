@@ -21,7 +21,7 @@ class Classifier {
     });
   }
   static validate(token) {
-    return /\w+/.test(token) || token.length < 3;
+    return /\w+/.test(token) && token.length > 3 && !stopWords.includes(token);
   }
   increment(token, category) {
     this.categories[category].tokenCount += 1;
@@ -102,7 +102,6 @@ class Classifier {
           let word = this.dict[token];
           words.push(word);
         }
-      } else {
       }
     });
     let sum = 0;
