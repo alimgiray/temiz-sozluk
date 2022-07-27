@@ -1,12 +1,12 @@
-console.log("classifier");
-
 class Classifier {
   constructor() {
     this.dict = {};
     this.categories = {};
     this.wordList = [];
     this.categoryList = [];
+    this.entryCount = 0;
     let self = this;
+    // chrome.storage.local.clear();
     chrome.storage.local.get(["model"], function (result) {
       if (result) {
         const model = result.model;
@@ -15,6 +15,7 @@ class Classifier {
           self.categories = model.categories;
           self.wordList = model.wordList;
           self.categoryList = model.categoryList;
+          self.entryCount = model.entryCount;
         }
       }
     });
@@ -42,7 +43,6 @@ class Classifier {
     }
   }
   addDocument(entry, category) {
-    console.log(entry);
     if (this.categories[category] === undefined) {
       this.categories[category] = { docCount: 1, tokenCount: 0 };
       this.categoryList.push(category);
@@ -88,7 +88,8 @@ class Classifier {
         wordCat.prob = Math.max(0.01, Math.min(0.99, prob));
       });
     });
-    console.log("saving", this);
+    this.entryCount++;
+    console.log(`Evaluated ${this.entryCount} entries`);
     chrome.storage.local.set({ model: this }, function () {});
   }
   guess(data) {
