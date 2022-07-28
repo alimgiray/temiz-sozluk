@@ -23,9 +23,7 @@
   ],
   "background": {},
   "permissions": [
-    "unlimitedStorage",
-    "storage",
-    "activeTab"
+    "storage"
   ],
   "action": {
     "default_icon": {
