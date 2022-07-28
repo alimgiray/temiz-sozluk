@@ -53,7 +53,9 @@ class Classifier {
     tokens.forEach((token) => {
       token = token.toLowerCase();
       if (Classifier.validate(token)) {
-        this.increment(token, category);
+        const stem = stemmer(token);
+        console.log("word:", token, "stem:", stem);
+        this.increment(stem, category);
       }
     });
     this.train();
@@ -98,6 +100,7 @@ class Classifier {
     tokens.forEach((token) => {
       token = token.toLowerCase();
       if (Classifier.validate(token)) {
+        token = stemmer(token);
         if (this.dict[token] !== undefined) {
           let word = this.dict[token];
           words.push(word);

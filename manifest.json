@@ -12,6 +12,8 @@
       "js": [
         "src/scripts/classifier.js",
         "src/scripts/detect.js",
+        "src/scripts/stemmer.js",
+        "src/words/all.js",
         "src/words/stop.js"
       ],
       "css": [
