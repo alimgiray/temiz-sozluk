@@ -58,6 +58,7 @@ function classify(entryDiv) {
 
   feedbackContainer.querySelector("#predict-like")?.remove();
   feedbackContainer.querySelector("#predict-dislike")?.remove();
+  feedbackContainer.querySelector("#predict-neutral")?.remove();
 
   const probability = document.createElement("span");
   if (result["true"].probability > result["false"].probability) {
@@ -65,11 +66,14 @@ function classify(entryDiv) {
     probability.innerHTML = `%${Math.round(
       (result["true"].probability - result["false"].probability) * 100
     )} 👍 `;
-  } else {
+  } else if (result["true"].probability < result["false"].probability) {
     probability.setAttribute("id", "predict-dislike");
     probability.innerHTML = `%${Math.round(
       (result["false"].probability - result["true"].probability) * 100
     )} 👎 `;
+  } else {
+    probability.setAttribute("id", "predict-neutral");
+    probability.innerHTML = `🤷‍♂️`;
   }
   feedbackContainer.appendChild(probability);
 }
