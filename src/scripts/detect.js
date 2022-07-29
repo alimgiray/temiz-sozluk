@@ -13,7 +13,10 @@ function setupEventListeners() {
   Array.from(dislikeButtons).forEach((b) =>
     b.addEventListener("click", processDislike)
   );
+  classifyPage();
+}
 
+function classifyPage() {
   const entries = document.getElementsByClassName("content");
   Array.from(entries).forEach((e) => {
     classify(e);
