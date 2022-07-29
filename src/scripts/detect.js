@@ -21,13 +21,15 @@ function setupEventListeners() {
 }
 
 function processLike(e) {
-  const entry = getEntry(e);
+  const { entry, entryDiv } = getEntry(e);
   classifier.addDocument(entry, true);
+  classify(entryDiv);
 }
 
 function processDislike(e) {
-  const entry = getEntry(e);
+  const { entry, entryDiv } = getEntry(e);
   classifier.addDocument(entry, false);
+  classify(entryDiv);
 }
 
 function getEntry(e) {
@@ -37,9 +39,9 @@ function getEntry(e) {
   const entryDivs = entryElement.getElementsByClassName("content");
   if (entryDivs.length > 0) {
     const entryDiv = entryDivs[0];
-    return sanitize(entryDiv);
+    return { entry: sanitize(entryDiv), entryDiv };
   }
-  return null;
+  return null, null;
 }
 
 function classify(entryDiv) {
@@ -53,13 +55,17 @@ function classify(entryDiv) {
   for (const key in result) {
     const probability = document.createElement("span");
     if (key === "true") {
+      probability.setAttribute("id", "predict-like");
       probability.innerHTML = `like: %${Math.round(
         result[key].probability * 100
       )} `;
+      feedbackContainer.querySelector("#predict-like")?.remove();
     } else {
+      probability.setAttribute("id", "predict-dislike");
       probability.innerHTML = `dislike: %${Math.round(
         result[key].probability * 100
       )} `;
+      feedbackContainer.querySelector("#predict-dislike")?.remove();
     }
     feedbackContainer.appendChild(probability);
   }

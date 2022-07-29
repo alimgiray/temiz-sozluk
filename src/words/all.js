@@ -1,4 +1,4 @@
-const allWords = [
+const allWords = new Set([
   "aba",
   "abacı",
   "abacılık",
@@ -60280,4 +60280,4 @@ const allWords = [
   "zürriyetsiz",
   "zürriyetsizlik",
   "züyuf",
-];
+]);

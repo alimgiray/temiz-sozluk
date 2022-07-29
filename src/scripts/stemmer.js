@@ -9,14 +9,14 @@ const gerundSuffixes = ["mek", "mak"];
 function stemmer(word) {
   const originalWord = word;
   while (word.length > 1) {
-    if (allWords.includes(word)) {
+    if (allWords.has(word)) {
       return word;
     }
     // handle lenition
     const lastLetter = word.slice(-1);
     if (lenitionLetters.includes(lastLetter)) {
       const lastLetterChangedWord = handleLenition(word, lastLetter);
-      if (allWords.includes(lastLetterChangedWord)) {
+      if (allWords.has(lastLetterChangedWord)) {
         return lastLetterChangedWord;
       }
     }
@@ -27,7 +27,7 @@ function stemmer(word) {
     }
     for (let i = 0; i < gerundSuffixes.length; i++) {
       const suffix = gerundSuffixes[i];
-      if (allWords.includes(word + suffix)) {
+      if (allWords.has(word + suffix)) {
         return word;
       }
     }
@@ -60,7 +60,7 @@ function handleSuffixes(word) {
     copulaSuffixes.includes(suffix) ||
     nounMakingSuffixes.includes(suffix)
   ) {
-    if (allWords.includes(wordWithoutSuffix)) {
+    if (allWords.has(wordWithoutSuffix)) {
       return wordWithoutSuffix;
     }
   }
