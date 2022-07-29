@@ -53,25 +53,25 @@ function classify(entryDiv) {
     return;
   }
 
-  const entry = sanitize(entryDiv);
+  const entry = sanitize(entryDiv).split(" ").splice(0, 50).join(" ");
   const result = classifier.guess(entry);
-  for (const key in result) {
-    const probability = document.createElement("span");
-    if (key === "true") {
-      probability.setAttribute("id", "predict-like");
-      probability.innerHTML = `like: %${Math.round(
-        result[key].probability * 100
-      )} `;
-      feedbackContainer.querySelector("#predict-like")?.remove();
-    } else {
-      probability.setAttribute("id", "predict-dislike");
-      probability.innerHTML = `dislike: %${Math.round(
-        result[key].probability * 100
-      )} `;
-      feedbackContainer.querySelector("#predict-dislike")?.remove();
-    }
-    feedbackContainer.appendChild(probability);
+
+  feedbackContainer.querySelector("#predict-like")?.remove();
+  feedbackContainer.querySelector("#predict-dislike")?.remove();
+
+  const probability = document.createElement("span");
+  if (result["true"].probability > result["false"].probability) {
+    probability.setAttribute("id", "predict-like");
+    probability.innerHTML = `%${Math.round(
+      (result["true"].probability - result["false"].probability) * 100
+    )} 👍 `;
+  } else {
+    probability.setAttribute("id", "predict-dislike");
+    probability.innerHTML = `%${Math.round(
+      (result["false"].probability - result["true"].probability) * 100
+    )} 👎 `;
   }
+  feedbackContainer.appendChild(probability);
 }
 
 function getFeedbackContainer(entryDiv) {
